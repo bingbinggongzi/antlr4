@@ -12,7 +12,7 @@ labelFormat
   ;
 
 labelContent
-  : (zplCommand)*
+  : (NEWLINE* zplCommand)* NEWLINE*
   ;
 
 zplCommand
@@ -58,7 +58,7 @@ param
   ;
 
 fieldDataContent
-  : /* lexer handles content in FIELD_DATA mode */
+  : FIELD_DATA_CHARS*
   ;
 
 program
