@@ -9,7 +9,8 @@ CARET_FD  : '^FD' -> pushMode(FIELD_DATA);  // field data start (enter data mode
 CARET_FX  : '^FX' -> pushMode(FIELD_DATA);  // comment start (enter data mode)
 CARET_FS  : '^FS';              // field separator (ends ^FD or ^FX data block)
 CARET_FO  : '^FO';
-CARET_A   : '^A' [A-Za-z0-9];  // font specifier follows ^A
+// ^A command with one-letter, digit, or '@' font designator
+CARET_A   : '^A' [A-Za-z0-9@];
 CARET_B   : '^B';
 CARET_BY  : '^BY';
 CARET_LH  : '^LH';
@@ -88,15 +89,15 @@ NEWLINE   : '\r'? '\n' ;
 MOD       : [Mm] [Oo] [Dd] ;
 NAME      : [Nn] [Aa] [Mm] [Ee] ;
 RESUME    : [Rr] [Ee] [Ss] [Uu] [Mm] [Ee] ;
-LETTER    : [A-Za-z] ;
-FONT_DIGIT: [0-9] ;
 ORIENTATION: [NRIB] ;
-DEVICE_FILE: LETTER ':' (~[,\r\n])* ;
+ID        : [A-Za-z_] [A-Za-z0-9_]* '$'? ;   // variable or label name or hex text
+LETTER    : [A-Za-z] ;
 SIGNED_INT: ('+'|'-')?[0-9]+ ;
+FONT_DIGIT: [0-9] ;
+DEVICE_FILE: LETTER ':' (~[,\r\n])* ;
 ISERROR   : [Ii] [Ss] [Ee] [Rr] [Rr] [Oo] [Rr] ;
 ISWARNING : [Ii] [Ss] [Ww] [Aa] [Rr] [Nn] [Ii] [Nn] [Gg] ;
 SUB       : [Ss] [Uu] [Bb] ;
-ID        : [A-Za-z_] [A-Za-z0-9_]* '$'? ;   // variable or label name or hex text
 INT       : [0-9]+ ;                      // integer number (non-negative; sign handled in parser)
 FLOAT     : [0-9]+ '.' [0-9]+ ([Ee][+-]?[0-9]+)? ;  // floating-point literal
 HEXDIGIT  : [0-9A-Fa-f] ;
