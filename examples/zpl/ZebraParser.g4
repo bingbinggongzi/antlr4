@@ -22,7 +22,7 @@ zplCommand
   | CARET_A ORIENTATION COMMA SIGNED_INT COMMA SIGNED_INT
   | CARET_A '@' ORIENTATION COMMA SIGNED_INT COMMA SIGNED_INT COMMA deviceAndFile
   | CARET_B (paramList)?
-  | CARET_BY SIGNED_INT (COMMA SIGNED_INT (COMMA SIGNED_INT)?)?
+  | CARET_BY number (COMMA number (COMMA number)?)?
   | CARET_FD fieldDataContent
   | CARET_FX fieldDataContent
   | CARET_LH SIGNED_INT COMMA SIGNED_INT
@@ -43,6 +43,7 @@ zplCommand
 
 deviceAndFile
   : DEVICE_FILE
+  | FILENAME
   ;
 
 
@@ -56,6 +57,11 @@ param
   | ORIENTATION
   | ID
   | ZBI_STRING
+  ;
+
+number
+  : SIGNED_INT
+  | FLOAT
   ;
 
 fieldDataContent
