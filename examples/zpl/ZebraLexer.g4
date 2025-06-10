@@ -24,7 +24,9 @@ CARET_PM  : '^PM';
 CARET_PON : '^PON';
 CARET_POF : '^POF';
 CARET_FN  : '^FN';
-TILDE_CMD : '~' [A-Z0-9] [A-Z0-9]?;  // any ~ command (one or two chars, e.g. ~DG)
+// any ~ command such as ~DG or ~JR
+// use an optional second character instead of "{1,2}" which ANTLR does not support
+TILDE_CMD : '~' [A-Z0-9] [A-Z0-9]?;
 
 // General ^-commands (two-letter or one-letter+digit/@ codes) not handled above
 CARET_CMD : '^' [A-Z0-9@] [A-Z0-9@]?;
@@ -113,5 +115,6 @@ COMMENT_EXCL: '!' ~[\r\n]* -> skip ;       // inline comment starting with '!'
 
 // Mode for capturing ^FD/^FX data content until ^FS
 mode FIELD_DATA;
-FIELD_DATA_CHARS: ~[\u005e~]+;               // characters inside ^FD/^FX data
+// characters inside ^FD/^FX data; stop when a caret or tilde starts a new command
+FIELD_DATA_CHARS: ~[\u005e~]+;
 FIELD_DATA_END  : '^FS' -> type(CARET_FS), popMode;  // on seeing ^FS, emit it and exit data mode

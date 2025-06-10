@@ -2,6 +2,8 @@ parser grammar ZebraParser;
 
 options { tokenVocab=ZebraLexer; }
 
+// A ZPL file may contain one or more label formats optionally separated by blank lines.
+// Accept optional trailing newlines before the final EOF so files ending with a newline parse cleanly.
 script
   : (labelFormat)+ NEWLINE* EOF
   | program EOF
