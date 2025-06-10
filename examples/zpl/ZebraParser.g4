@@ -3,7 +3,7 @@ parser grammar ZebraParser;
 options { tokenVocab=ZebraLexer; }
 
 script
-  : (labelFormat)+ EOF
+  : (labelFormat)+ NEWLINE* EOF
   | program EOF
   ;
 
@@ -18,8 +18,24 @@ labelContent
 zplCommand
   : CARET_DF deviceAndFile (zplCommand)*
   | CARET_XF deviceAndFile
+  | CARET_FO INT COMMA INT (COMMA INT)?
+  | CARET_A LETTER ORIENTATION (COMMA INT (COMMA INT)?)
+  | CARET_A '@' ORIENTATION COMMA INT COMMA INT COMMA deviceAndFile
+  | CARET_B (paramList)?
+  | CARET_BY INT (COMMA INT (COMMA INT)?)?
   | CARET_FD fieldDataContent
   | CARET_FX fieldDataContent
+  | CARET_LH INT COMMA INT
+  | CARET_LR LETTER
+  | CARET_LS SIGNED_INT
+  | CARET_LT SIGNED_INT
+  | CARET_MT LETTER
+  | CARET_PW INT
+  | CARET_PR INT (COMMA INT (COMMA INT)?)?
+  | CARET_PM LETTER
+  | CARET_PON
+  | CARET_POF
+  | CARET_FN INT (ZBI_STRING)?
   | CARET_CMD (params=paramList)?
   | TILDE_CMD (params=paramList)?
   | CARET_FS
