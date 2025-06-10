@@ -26,7 +26,7 @@ CARET_FN  : '^FN';
 TILDE_CMD : '~' [A-Z0-9] [A-Z0-9]?;  // any ~ command (one or two chars, e.g. ~DG)
 
 // General ^-commands (two-letter or one-letter+digit/@ codes) not handled above
-CARET_CMD : '^' [A-Z0-9@] [A-Z0-9]?; 
+CARET_CMD : '^' [A-Z0-9@] [A-Z0-9@]?;
 
 // Delimiters and special characters
 COMMA     : ',';               // parameter separator
@@ -95,7 +95,7 @@ SIGNED_INT: ('+'|'-')?[0-9]+ ;
 ISERROR   : [Ii] [Ss] [Ee] [Rr] [Rr] [Oo] [Rr] ;
 ISWARNING : [Ii] [Ss] [Ww] [Aa] [Rr] [Nn] [Ii] [Nn] [Gg] ;
 SUB       : [Ss] [Uu] [Bb] ;
-ID        : [A-Za-z] [A-Za-z0-9_]* '$'? ;   // variable or label name (case-insensitive, '$' suffix for strings)
+ID        : [A-Za-z_] [A-Za-z0-9_]* '$'? ;   // variable or label name or hex text
 INT       : [0-9]+ ;                      // integer number (non-negative; sign handled in parser)
 FLOAT     : [0-9]+ '.' [0-9]+ ([Ee][+-]?[0-9]+)? ;  // floating-point literal
 HEXDIGIT  : [0-9A-Fa-f] ;
