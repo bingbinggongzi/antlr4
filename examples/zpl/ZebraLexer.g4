@@ -9,7 +9,7 @@ CARET_FD  : '^FD' -> pushMode(FIELD_DATA);  // field data start (enter data mode
 CARET_FX  : '^FX' -> pushMode(FIELD_DATA);  // comment start (enter data mode)
 CARET_FS  : '^FS';              // field separator (ends ^FD or ^FX data block)
 CARET_FO  : '^FO';
-CARET_A   : '^A';
+CARET_A   : '^A' [A-Za-z0-9];  // font specifier follows ^A
 CARET_B   : '^B';
 CARET_BY  : '^BY';
 CARET_LH  : '^LH';
@@ -89,6 +89,7 @@ MOD       : [Mm] [Oo] [Dd] ;
 NAME      : [Nn] [Aa] [Mm] [Ee] ;
 RESUME    : [Rr] [Ee] [Ss] [Uu] [Mm] [Ee] ;
 LETTER    : [A-Za-z] ;
+FONT_DIGIT: [0-9] ;
 ORIENTATION: [NRIB] ;
 DEVICE_FILE: LETTER ':' (~[,\r\n])* ;
 SIGNED_INT: ('+'|'-')?[0-9]+ ;
@@ -110,5 +111,5 @@ COMMENT_EXCL: '!' ~[\r\n]* -> skip ;       // inline comment starting with '!'
 
 // Mode for capturing ^FD/^FX data content until ^FS
 mode FIELD_DATA;
-FIELD_DATA_CHARS: ~[\u005e~]+ -> more;      // accumulate all characters until a command prefix (caret or tilde)
+FIELD_DATA_CHARS: ~[\u005e~]+;               // characters inside ^FD/^FX data
 FIELD_DATA_END  : '^FS' -> type(CARET_FS), popMode;  // on seeing ^FS, emit it and exit data mode
