@@ -1,13 +1,28 @@
 lexer grammar ZebraLexer;
 
 // ZPL command prefix tokens
-CARET_XA  : '^XA';              // start format :contentReference[oaicite:26]{index=26}
-CARET_XZ  : '^XZ';              // end format   :contentReference[oaicite:27]{index=27}
-CARET_DF  : '^DF';              // download format (stored format begin):contentReference[oaicite:28]{index=28}
+CARET_XA  : '^XA';              // start format
+CARET_XZ  : '^XZ';              // end format
+CARET_DF  : '^DF';              // download format (stored format begin)
 CARET_XF  : '^XF';              // recall format (stored format usage)
-CARET_FD  : '^FD' -> pushMode(FIELD_DATA);  // field data start (enter data mode):contentReference[oaicite:30]{index=30}
-CARET_FX  : '^FX' -> pushMode(FIELD_DATA);  // comment start (enter data mode):contentReference[oaicite:31]{index=31}
-CARET_FS  : '^FS';              // field separator (ends ^FD or ^FX data block):contentReference[oaicite:32]{index=32}
+CARET_FD  : '^FD' -> pushMode(FIELD_DATA);  // field data start (enter data mode)
+CARET_FX  : '^FX' -> pushMode(FIELD_DATA);  // comment start (enter data mode)
+CARET_FS  : '^FS';              // field separator (ends ^FD or ^FX data block)
+CARET_FO  : '^FO';
+CARET_A   : '^A';
+CARET_B   : '^B';
+CARET_BY  : '^BY';
+CARET_LH  : '^LH';
+CARET_LR  : '^LR';
+CARET_LS  : '^LS';
+CARET_LT  : '^LT';
+CARET_MT  : '^MT';
+CARET_PW  : '^PW';
+CARET_PR  : '^PR';
+CARET_PM  : '^PM';
+CARET_PON : '^PON';
+CARET_POF : '^POF';
+CARET_FN  : '^FN';
 TILDE_CMD : '~' [A-Z0-9] [A-Z0-9]?;  // any ~ command (one or two chars, e.g. ~DG)
 
 // General ^-commands (two-letter or one-letter+digit/@ codes) not handled above
@@ -21,6 +36,7 @@ HASH      : '#';               // for channels (e.g., OPEN #1)
 LPAREN    : '(';
 RPAREN    : ')';
 QUOTE     : '"' ;
+AT        : '@' ;
 PLUS      : '+' ;
 MINUS     : '-' ;
 STAR      : '*' ;
@@ -89,10 +105,10 @@ ZBI_STRING: '"' (~["\r\n] | '""')* '"' ;   // allows double quote escapement by 
 
 // Whitespace and comments
 WS : [ \t\r\n]+ -> skip ;
-COMMENT_REM: REM ~[\r\n]* -> skip ;        // whole-line comment starting with REM:contentReference[oaicite:33]{index=33}
-COMMENT_EXCL: '!' ~[\r\n]* -> skip ;       // inline comment starting with '!':contentReference[oaicite:34]{index=34}
+COMMENT_REM: REM ~[\r\n]* -> skip ;        // whole-line comment starting with REM
+COMMENT_EXCL: '!' ~[\r\n]* -> skip ;       // inline comment starting with '!'
 
 // Mode for capturing ^FD/^FX data content until ^FS
 mode FIELD_DATA;
-FIELD_DATA_CHARS: ~['^'~]+ -> more;         // accumulate all characters until a command prefix (caret or tilde)
+FIELD_DATA_CHARS: ~[\u005e~]+ -> more;      // accumulate all characters until a command prefix (caret or tilde)
 FIELD_DATA_END  : '^FS' -> type(CARET_FS), popMode;  // on seeing ^FS, emit it and exit data mode
