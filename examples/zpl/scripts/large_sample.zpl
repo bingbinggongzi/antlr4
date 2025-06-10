@@ -113,4 +113,3 @@
 ^FN972^FD&ZLELABEL-WEIGHT&^FS
 
 ^XZ
-^FX End of job
