@@ -5,12 +5,12 @@ options { tokenVocab=ZebraLexer; }
 // A ZPL file may contain one or more label formats optionally separated by blank lines.
 // Accept optional trailing newlines before the final EOF so files ending with a newline parse cleanly.
 script
-  : (labelFormat)+ NEWLINE* EOF
+  : (labelFormat)+ EOF
   | program EOF
   ;
 
 labelFormat
-  : CARET_XA labelContent CARET_XZ
+  : CARET_XA labelContent CARET_XZ NEWLINE*
   ;
 
 labelContent
@@ -20,7 +20,7 @@ labelContent
 zplCommand
   : CARET_DF deviceAndFile (zplCommand)*
   | CARET_XF deviceAndFile
-  | CARET_FO SIGNED_INT COMMA SIGNED_INT (COMMA SIGNED_INT)?
+  | CARET_FO (SIGNED_INT)? COMMA SIGNED_INT (COMMA SIGNED_INT)?
   | CARET_A ORIENTATION COMMA SIGNED_INT COMMA SIGNED_INT
   | CARET_A '@' ORIENTATION COMMA SIGNED_INT COMMA SIGNED_INT COMMA deviceAndFile
   | CARET_B (paramList)?

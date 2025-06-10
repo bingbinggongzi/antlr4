@@ -97,7 +97,9 @@ LETTER    : [A-Za-z] ;
 SIGNED_INT: ('+'|'-')?[0-9]+ ;
 FONT_DIGIT: [0-9] ;
 DEVICE_FILE: LETTER ':' (~[,\r\n])* ;
-FILENAME   : [A-Za-z0-9_.-]+ ;
+// file names should contain at least one non-digit so numeric values like 3.0
+// are not mistaken for file names
+FILENAME   : [A-Za-z_.-] [A-Za-z0-9_.-]* ;
 ISERROR   : [Ii] [Ss] [Ee] [Rr] [Rr] [Oo] [Rr] ;
 ISWARNING : [Ii] [Ss] [Ww] [Aa] [Rr] [Nn] [Ii] [Nn] [Gg] ;
 SUB       : [Ss] [Uu] [Bb] ;
