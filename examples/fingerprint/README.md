@@ -27,3 +27,21 @@ This example demonstrates using ANTLR4 to parse the Fingerprint printer language
    - `complex2.fp` demonstrates port signals
    - `complex3.fp` uses error handling and file input
    - `complex4.fp` shows `FOR...STEP` and string functions
+
+## Checking lexer coverage
+
+The grammar shipped with this example does not yet implement every command
+listed in the official Fingerprint manuals. The helper script
+`check_lexer_usage.py` compares tokens defined in `FingerprintLexer.g4`
+against those referenced in `FingerprintParser.g4` and prints any that are
+currently unused. Run it from this directory with Python:
+
+```sh
+python3 check_lexer_usage.py
+```
+
+Use the Honeywell *Fingerprint Command Reference* and related manuals in the
+`examples/` folder to decide how these missing commands should be parsed and
+extend `FingerprintParser.g4` accordingly. The parser already handles common
+barcode setup commands (like `BARHEIGHT` and `BARADJUST`) and recognizes
+several built-in variables such as `BARCODENAME$` and `BATTERY$`.

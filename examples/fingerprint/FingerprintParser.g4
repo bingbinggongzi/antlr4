@@ -242,10 +242,42 @@ miscCmdStmt
     | FILES (STRING)?
     | FORMFEED (expr)?
     | PRINTFEED (expr | printFeedReprintClause)?
+    | PF (expr | printFeedReprintClause)?
     | INVIMAGE
     | NORIMAGE
+    | NI
     | RENDER (ON | OFF)
     | LED (ON | OFF)
+    | BARADJUST expr
+    | BARHEIGHT expr
+    | BH expr
+    | CHECKSUM (ON | OFF)?
+    | DISPLAY
+    | FONTS
+    | FUNCTEST
+    | MERGE STRING
+    | MKDIR STRING
+    | REMOVE STRING
+    | RUN STRING
+    | STORE STRING
+    | FF (expr)?
+    | LIST
+    | LOAD STRING
+    | LSET STRING
+    | MAKEASSOC STRING
+    | MAP STRING
+    | NAME STRING
+    | NASC
+    | NASCD
+    | PWRDIAG
+    | REDIRECT STRING
+    | RND
+    | SET STRING
+    | SETSTDIO STRING
+    | STRIP
+    | TRANSFER STRING
+    | VERIFIER
+    | XORMODE
     | MAG expr COMMA expr
     | ALIGN expr
     | AN expr
@@ -287,7 +319,6 @@ miscCmdStmt
     | REMAP
     | ZMODEM (STRING)?
     ;
-
 lineReference
     : NUMBER
     | LABEL
@@ -338,6 +369,15 @@ primary
     | INKEY_S
     | INPUT_S LPAREN expr RPAREN
     | EOF_FUNC LPAREN HASH? expr RPAREN
+    | BARCODENAME_S
+    | BATTERY_S
+    | CURDIR_S
+    | DATE_S
+    | DIRNAME_S
+    | FUNCTEST_S
+    | GETASSOC_S
+    | GETASSOCNAME_S
+    | KEYBMAP_S
     | OPTBool
     ;
 
