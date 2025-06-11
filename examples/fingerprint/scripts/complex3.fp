@@ -1,0 +1,16 @@
+10 REM Mixed control structures and error handling
+20 KEY BEEP OFF
+30 ON ERROR GOTO ErrHandler
+40 INPUT "Enter file:" , FILENAME$
+50 OPEN FILENAME$ FOR INPUT AS #1
+60 WHILE NOT EOF( #1 )
+70   LINE INPUT #1 LINE$
+80   IF LEN(LINE$) > 0 THEN PRINT LINE$
+90 WEND
+100 CLOSE #1
+110 PRINT "Completed"
+120 END
+
+200 ErrHandler:
+210 PRINT "Error:" , ERR
+220 RESUME NEXT
