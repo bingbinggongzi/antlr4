@@ -1,0 +1,1 @@
+(program (line (lineNumber 10) (statementList (statement (printStmt PRINT (printItems (expr (logicalExpr (relationalExpr (sumExpr (termExpr (factorExpr (primary "Hello, Fingerprint")))))))))))) \n (line (lineNumber 20) (statementList (statement (endProgStmt END)))) \n line <EOF>)
