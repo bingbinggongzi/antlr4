@@ -1,0 +1,2 @@
+text(line,x,y,font,h,w,text) ::= "<line> TEXT <x>,<y>,<font>,<h>,<w>,\"<text>\""
+end(line) ::= "<line> END"
