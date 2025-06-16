@@ -29,10 +29,13 @@ script.
    ```sh
    java -cp .:generated:antlr-4.13.1-complete.jar:ST4-4.3.4.jar ZplToFingerprint sample.zpl > sample.fp
    ```
-   The generated `sample.fp` contains lines like:
+   The generated `sample.fp` shows plain text lines and variable fields
+   translated from `^FN` commands:
    ```
    10 TEXT 250,350,A0N,40,40,"1 S #S"
    20 TEXT 250,450,A0N,40,40,"2 H #H"
+   30 TEXT 150,400,A0N,30,30,FN15$
+   40 LET FN15$="15151515"
    ...
-   70 END
+   90 END
    ```

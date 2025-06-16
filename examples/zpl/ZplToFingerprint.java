@@ -26,6 +26,7 @@ public class ZplToFingerprint {
         private Integer height;
         private Integer width;
         private String text;
+        private Integer fieldNumber;
 
         @Override
         public void exitZplCommand(ZebraParser.ZplCommandContext ctx) {
@@ -45,6 +46,8 @@ public class ZplToFingerprint {
                 java.util.List<TerminalNode> nums = ctx.SIGNED_INT();
                 height = Integer.parseInt(nums.get(0).getText());
                 width = Integer.parseInt(nums.get(1).getText());
+            } else if (ctx.CARET_FN() != null) {
+                fieldNumber = Integer.parseInt(ctx.SIGNED_INT(0).getText());
             } else if (ctx.CARET_FD() != null) {
                 StringBuilder sb = new StringBuilder();
                 if (ctx.fieldDataContent() != null) {
@@ -54,7 +57,27 @@ public class ZplToFingerprint {
                 }
                 text = sb.toString().trim();
             } else if (ctx.CARET_FS() != null) {
-                if (text != null && x != null && y != null && font != null && height != null && width != null) {
+                if (fieldNumber != null) {
+                    if (x != null && y != null && font != null && height != null && width != null) {
+                        ST stmt = templates.getInstanceOf("varText");
+                        stmt.add("line", line);
+                        stmt.add("x", x);
+                        stmt.add("y", y);
+                        stmt.add("font", font);
+                        stmt.add("h", height);
+                        stmt.add("w", width);
+                        stmt.add("var", "FN" + fieldNumber + "$");
+                        System.out.println(stmt.render());
+                        line += 10;
+                    } else if (text != null) {
+                        ST assign = templates.getInstanceOf("assign");
+                        assign.add("line", line);
+                        assign.add("var", "FN" + fieldNumber + "$");
+                        assign.add("text", text);
+                        System.out.println(assign.render());
+                        line += 10;
+                    }
+                } else if (text != null && x != null && y != null && font != null && height != null && width != null) {
                     ST stmt = templates.getInstanceOf("text");
                     stmt.add("line", line);
                     stmt.add("x", x);
@@ -68,6 +91,7 @@ public class ZplToFingerprint {
                 }
                 x = y = height = width = null;
                 font = text = null;
+                fieldNumber = null;
             }
         }
 
