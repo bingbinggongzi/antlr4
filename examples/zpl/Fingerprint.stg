@@ -1,0 +1,4 @@
+text(line,x,y,font,h,w,text) ::= "<line> TEXT <x>,<y>,<font>,<h>,<w>,\"<text>\""
+end(line) ::= "<line> END"
+varText(line,x,y,font,h,w,var) ::= "<line> TEXT <x>,<y>,<font>,<h>,<w>,<var>"
+assign(line,var,text) ::= "<line> LET <var>=\"<text>\""

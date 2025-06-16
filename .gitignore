@@ -137,3 +137,8 @@ runtime/Cpp/runtime/libantlr4-runtime.dylib
 
 # Go test and performance trace files
 **/*.pprof
+
+# ZPL example build files
+examples/zpl/generated/
+examples/zpl/*.class
+examples/zpl/ST4-*.jar
